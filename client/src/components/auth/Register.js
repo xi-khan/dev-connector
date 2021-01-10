@@ -1,6 +1,14 @@
 import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const Register = () => {
+// connects component to redux
+import { connect } from "react-redux";
+// bring in action
+import { setAlert } from "../../actions/alert";
+
+// Destructure props  here
+const Register = ({ setAlert }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,8 +25,7 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("Passwords do not match");
-      // setAlert("Passwords do not match", "danger");
+      setAlert("Passwords do not match", "danger");
     } else {
       // register({ name, email, password });
       console.log(formData);
@@ -85,10 +92,19 @@ const Register = () => {
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
-        Already have an account? <a href="login.html">Sign In</a>
+        Already have an account? <Link to="/login">Sign In</Link>
       </p>
     </Fragment>
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
+
+// Whenever we use connect, we have to export it.
+// Whenever bringing an action, we have to pass it into connect.
+// Connect takes in any state that we want to map as the first argument
+// Second is an object with actions we want to use
+// it will allow us to access props.setAlert
+export default connect(null, { setAlert })(Register);
