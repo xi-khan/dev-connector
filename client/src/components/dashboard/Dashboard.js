@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
 import { getCurrentProfile } from "../../actions/profile";
+import DashboardActions from "../dashboard/DashboardActions";
 
 const Dashboard = ({
   getCurrentProfile,
@@ -24,9 +25,8 @@ const Dashboard = ({
       </p>
       {profile !== null ? (
         <Fragment>
-          Has
-          {/* <DashboardActions />
-          <Experience experience={profile.experience} />
+          <DashboardActions />
+          {/* <Experience experience={profile.experience} />
           <Education education={profile.education} />
 
           <div className="my-2">
