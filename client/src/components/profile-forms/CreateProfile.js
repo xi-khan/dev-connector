@@ -38,7 +38,7 @@ const CreateProfile = ({ createProfile, history }) => {
   } = formData;
 
   const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: [e.target.value] });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -222,14 +222,7 @@ const CreateProfile = ({ createProfile, history }) => {
 
 CreateProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  profile: state.profile,
-});
-
-// withRouter to use the history object
-export default connect(mapStateToProps, { createProfile })(
-  withRouter(CreateProfile)
-);
+// withRouter to use the history object in createProfile action
+export default connect(null, { createProfile })(withRouter(CreateProfile));

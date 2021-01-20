@@ -1,4 +1,5 @@
-import api from "../utils/api";
+import axios from "axios";
+import setAuthToken from "../utils/setAuthToken";
 import { setAlert } from "./alert";
 import {
   REGISTER_SUCCESS,
@@ -10,13 +11,15 @@ import {
   LOGOUT,
   CLEAR_PROFILE,
 } from "./types";
-import axios from "axios";
-import setAuthToken from "../utils/setAuthToken";
 
 //Load User
 export const loadUser = () => async (dispatch) => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+
   try {
-    const res = await api.get("/auth");
+    const res = await axios.get("/api/auth");
 
     dispatch({
       type: USER_LOADED,
@@ -30,9 +33,18 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register User
-export const register = (formData) => async (dispatch) => {
+export const register = ({ name, email, password }) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  // Prepairing the data to send
+  const body = JSON.stringify({ name, email, password });
+
   try {
-    const res = await api.post("/users", formData);
+    const res = await axios.post("/api/users", body, config);
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -54,10 +66,16 @@ export const register = (formData) => async (dispatch) => {
 
 // // Login User
 export const login = (email, password) => async (dispatch) => {
-  const body = { email, password };
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  // Prepairing the data to send
+  const body = JSON.stringify({ email, password });
 
   try {
-    const res = await api.post("/auth", body);
+    const res = await axios.post("/api/auth", body, config);
 
     dispatch({
       type: LOGIN_SUCCESS,

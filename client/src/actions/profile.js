@@ -1,4 +1,4 @@
-import api from "../utils/api";
+import axios from "axios";
 import { setAlert } from "./alert";
 
 import { GET_PROFILE, PROFILE_ERROR } from "./types";
@@ -6,7 +6,7 @@ import { GET_PROFILE, PROFILE_ERROR } from "./types";
 // Get the current users profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await api.get("/profile/me");
+    const res = await axios.get("/api/profile/me");
 
     dispatch({
       type: GET_PROFILE,
@@ -20,22 +20,28 @@ export const getCurrentProfile = () => async (dispatch) => {
   }
 };
 
-// Create or update profile
+// Create or update a profile
 export const createProfile = (formData, history, edit = false) => async (
   dispatch
 ) => {
   try {
-    const res = await api.post("/profile", formData);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const res = await axios.post("/api/profile", formData, config);
 
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
     });
 
-    dispatch(setAlert(edit ? "Profile Updated" : "Profile Created", "success"));
+    dispatch(setAlert(edit ? "Profile Updated" : "Profile created"));
 
     if (!edit) {
-      history.push("/dashboard");
+      history.push("/dasboard");
     }
   } catch (err) {
     const errors = err.response.data.errors;
