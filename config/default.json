@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://zihan123:zihan123@devconnector.hanpy.mongodb.net/DevConnector?retryWrites=true&w=majority",
-  "jwtSecret": "mysecrettoken"
+  "jwtSecret": "mysecrettoken",
+  "githubClientId": "9c49e8be5e22bfe5f046",
+  "githubSecret": "bae2aa47deb026c8aaecaad827dd8110fedbd964"
 }
