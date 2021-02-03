@@ -171,7 +171,7 @@ router.put(
   check("company", "Company is required").notEmpty(),
   check("from", "From date is required and needs to be from the past")
     .notEmpty()
-    .custom((value, { req }) => (req.body.to ? value > req.body.to : true)),
+    .custom((value, { req }) => (req.body.to ? value < req.body.to : true)),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
